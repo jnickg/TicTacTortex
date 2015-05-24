@@ -10,6 +10,7 @@ namespace TicTacTortex
     {
         Step,
         Sigmoid,
+        TanH
     }
 
     public static class Activation
@@ -22,6 +23,8 @@ namespace TicTacTortex
                     return (x > 1.0) ? 1.0 : 0.0;
                 case ActivationFunction.Sigmoid:
                     return 1.0 / (1.0 + Math.Pow(Math.E, -x));
+                case ActivationFunction.TanH:
+                    return ((Math.Pow(Math.E, x) - Math.Pow(Math.E, -x)) / (Math.Pow(Math.E, x) + Math.Pow(Math.E, -x)));
                 default:
                     throw new NotImplementedException();
             }
