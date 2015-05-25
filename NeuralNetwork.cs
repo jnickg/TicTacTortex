@@ -7,43 +7,58 @@ using System.Threading.Tasks;
 
 namespace TicTacTortex
 {
-    [DataContract]
     public class NeuralNetwork
     {
         private double[] inputs;
         private double[] hidden;
         private double[] outputs;
 
-        private double learnStep = 0.1;
+        private double learnStep = 0.1; // Should be in NN because it's relative to weight range
+
         private ActivationFunction _f = ActivationFunction.Step;
         private Random _r = new Random();
 
-        [DataMember]
         private int num_Inputs;
-        [DataMember]
         private int num_Hidden;
-        [DataMember]
         private int num_Outputs;
-        [DataMember]
         private double[,] weights_ItoH;
-        [DataMember]
         private double[,] weights_HtoO;
 
+        public double[] Inputs
+        {
+            get { return inputs; }
+            set { inputs = value; }
+        }
+
+        public double[] Hidden
+        {
+            get { return hidden; }
+            set { hidden = value; }
+        }
+
+        public double[] Outputs
+        {
+            get { return outputs; }
+            set { outputs = value; }
+        }
 
         public int Num_Inputs
         {
             get { return num_Inputs; }
+            set { num_Inputs = value; }
         }
         
         public int Num_Hidden
         {
             get { return num_Hidden; }
+            set { num_Hidden = value; }
         }
         
 
         public int Num_Outputs
         {
             get { return num_Outputs; }
+            set { num_Outputs = value; }
         }
 
         public double[,] Weights_InputToHidden
@@ -58,7 +73,12 @@ namespace TicTacTortex
             get { return weights_HtoO; }
             set { weights_HtoO = value; }
         }
-        
+
+        public double LearnStep
+        {
+            get { return learnStep; }
+            set { learnStep = value; }
+        }
 
 
         public NeuralNetwork(int num_Inputs, int num_Hidden, int num_Outputs)
@@ -99,7 +119,7 @@ namespace TicTacTortex
             }
         }
 
-        public void RunOn(double[] input, out double[] output)
+        public void RunOn(double[] input)
         {
             // copy inputs
             for (int i = 0; i < num_Inputs; ++i)
@@ -129,12 +149,6 @@ namespace TicTacTortex
                 }
                 // copy activation function of sum to output node
                 outputs[i] = Activation.Process(_f, sum);
-            }
-            // copy output
-            output = new double[num_Outputs];
-            for (int i = 0; i < num_Outputs; ++i)
-            {
-                output[i] = outputs[i];
             }
         }
     }

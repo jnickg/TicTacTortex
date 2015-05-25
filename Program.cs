@@ -12,13 +12,8 @@ namespace TicTacTortex
     {
         static void Main(string[] args)
         {
-            NeuralNetwork nn = new NeuralNetwork(18, 36, 18);
+            NeuralNetwork nn = new NeuralNetwork(64, 128, 64);
             nn.Initialize(ActivationFunction.Step);
-            // Test serialization of Neural Network
-            DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(NeuralNetwork));
-            FileStream fs = new FileStream("nn.json", FileMode.OpenOrCreate, FileAccess.Write);
-            js.WriteObject(fs, nn);
-            fs.Close();
         }
     }
 }
