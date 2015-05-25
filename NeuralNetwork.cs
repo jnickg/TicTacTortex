@@ -1,27 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TicTacTortex
 {
+    [DataContract]
     public class NeuralNetwork
     {
-        private int num_Inputs;
-        private int num_Hidden;
-        private int num_Outputs;
-        
-        private double[,] weights_ItoH;
-        private double[,] weights_HtoO;
-        
         private double[] inputs;
         private double[] hidden;
         private double[] outputs;
-        private double learnStep = 0.1;
 
+        private double learnStep = 0.1;
         private ActivationFunction _f = ActivationFunction.Step;
         private Random _r = new Random();
+
+        [DataMember]
+        private int num_Inputs;
+        [DataMember]
+        private int num_Hidden;
+        [DataMember]
+        private int num_Outputs;
+        [DataMember]
+        private double[,] weights_ItoH;
+        [DataMember]
+        private double[,] weights_HtoO;
+
+
+        public int Num_Inputs
+        {
+            get { return num_Inputs; }
+        }
+        
+        public int Num_Hidden
+        {
+            get { return num_Hidden; }
+        }
+        
+
+        public int Num_Outputs
+        {
+            get { return num_Outputs; }
+        }
+
+        public double[,] Weights_InputToHidden
+        {
+            get { return weights_ItoH; }
+            set { weights_ItoH = value; }
+        }
+        
+
+        public double[,] Weights_HiddenToOutput
+        {
+            get { return weights_HtoO; }
+            set { weights_HtoO = value; }
+        }
+        
+
 
         public NeuralNetwork(int num_Inputs, int num_Hidden, int num_Outputs)
         {
@@ -46,7 +84,7 @@ namespace TicTacTortex
             // set random weights I-H layer
             for (int i = 0; i < num_Inputs + 1; ++i)
             {
-                for (int j = 0; j < num_Hidden + 1; ++j)
+                for (int j = 0; j < num_Hidden; ++j)
                 {
                     weights_ItoH[i, j] = ((_r.NextDouble() * 2) - 1);
                 }
@@ -56,7 +94,7 @@ namespace TicTacTortex
             {
                 for (int j = 0; j < num_Outputs; ++j)
                 {
-                    weights_ItoH[i, j] = ((_r.NextDouble() * 2) - 1);
+                    weights_HtoO[i, j] = ((_r.NextDouble() * 2) - 1);
                 }
             }
         }
